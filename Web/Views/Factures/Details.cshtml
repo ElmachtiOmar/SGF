@@ -1,0 +1,132 @@
+﻿@model Core.Entities.Facture
+<div class="invoice-btn-section clearfix d-print-none">
+    <a href="javascript:window.print()" class="btn btn-lg btn-print">
+        <i class="fa fa-print"></i> Print Invoice
+    </a>
+
+</div>
+<div class="invoice-7 invoice-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="invoice-inner" id="invoice_wrapper">
+                    <div class="invoice-top">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="invoice text-end">
+                                    <h1>Invoice</h1>
+                                    <p class="mb-1">Invoice Number <span>#@Model.Numero</span></p>
+                                    <p class="mb-0">Invoice Date <span>@Model.Date.ToShortDateString()</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="invoice-info">
+
+                          
+                            <div class="col-sm-12 mb-30">
+                                <div class="invoice-number ">
+                                    <h4 class="inv-title-1">Client</h4>
+                                    <p class="invo-addr-1">
+                                     <strong>Code:</strong> @Model.Client.Code <br/>
+                                    <strong>Name:</strong> @Model.Client.Name <br />
+                                    <strong>Email:</strong> @Model.Client.Email <br />
+                                    <strong>Address:</strong> @Model.Client.Adress.City @Model.Client.Adress.Street @Model.Client.Adress.Numbre  <br />
+                                    <strong>Phone:</strong> @Model.Client.Phone <br />
+                                    </p>
+                                </div>
+                            </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-6 mb-30">
+                                <h4 class="inv-title-1">Date</h4>
+                                <p class="inv-from-1">Due Date: @Model.Date.ToShortDateString()</p>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="order-summary">
+                        <div class="table-responsive">
+                            <table class="table invoice-table">
+                                <thead class="bg-active">
+                                    <tr>
+                                        <th>Produit</th>
+                                        <th class="text-center">Price</th>
+                                        <th class="text-center">Quantity</th>
+                                        <th class="text-center">TVA(%)</th>
+                                        <th class="text-right">Totals</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var ligneFacture in Model.LigneFactures)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="item-desc-1">
+                                                    <span>@ligneFacture.Produit.Libelle</span>
+                                                    <small>@ligneFacture.Produit.Reference</small>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">@ligneFacture.Produit.PrixVenteHT.ToString("C")</td>
+                                            <td class="text-center">@ligneFacture.Quantite</td>
+                                            <td class="text-center">20</td>
+                                            <td class="text-right">@ligneFacture.TotalHT.ToString("C")</td>
+                                        </tr>
+                                    }
+
+                                    <tr>
+                                        <td colspan="4" class="text-end">Net a Payer HT</td>
+                                        <td class="text-right">@Model.NetaPayerHT.ToString("C")</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" class="text-end">TotalTVA</td>
+                                        <td class="text-right">@Model.TotalTVA.ToString("C")</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" class="text-end fw-bold">Net a Payer TTC</td>
+                                        <td class="text-right fw-bold">@Model.NetaPayerTTC.ToString("C")</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="invoice-informeshon">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="payment-info mb-30">
+                                    <h3 class="inv-title-1">Payment Info</h3>
+                                    <ul class="bank-transfer-list-1">
+                                        <li><strong>Mode de Payment :</strong> @Model.Payment?.ModeDePayment</li>
+                                        <li><strong>N° Cheque:</strong> @Model.NCheque</li>
+                                        <li><strong>Mode de Livraison:</strong> @Model.Payment?.ModeDeLivraison</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="invoice-contact clearfix">
+                        <div class="row g-0">
+                            <div class="col-lg-9 col-md-11 col-sm-12">
+                                <div class="contact-info">
+                                    <a href="tel:+55-4XX-634-7071"><i class="fa fa-phone"></i> +00 123 647 840</a>
+                                    <a href="mailto:info@themevessel.com"><i class="fa fa-envelope"></i> info@themevessel.com</a>
+                                    <a href="tel:info@themevessel.com" class="mr-0 d-none-580">
+                                        <i class="fa fa-map-marker"></i> Address
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Invoice 7 end -->
+
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/assets/js/jspdf.min.js"></script>
+<script src="~/assets/js/html2canvas.js"></script>
+<script src="~/assets/js/app.js"></script>

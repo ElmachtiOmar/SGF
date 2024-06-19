@@ -1,0 +1,10 @@
+.client-name {
+}
+
+.client-name h5 {
+  padding: 0px 90px 30px 10px;
+  border: 1px solid black;
+  justify-content: flex-end;
+  display: flex;
+  margin: 50px 5px 0px 90%;
+}

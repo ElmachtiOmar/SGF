@@ -1,0 +1,74 @@
+﻿@model Web.ViewModel.ProductViewModel
+
+<h2>Produit Details</h2>
+
+<div>
+    <h4>Produit Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Libelle
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Libelle)
+        </dd>
+
+        <dt class="col-sm-2">
+            PrixAchatHT
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PrixAchatHT)
+        </dd>
+
+        <dt class="col-sm-2">
+            PrixVenteHT
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PrixVenteHT)
+        </dd>
+
+        
+        <dt class="col-sm-2">
+            QuantityStock
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuantityStock)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h4>Movements</h4>
+    <hr />
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Facture Numero</th>
+                    <th>Facture Date</th>
+                    <th>Quantity</th>
+                    <th>Total TTC</th>
+                    <th>Client</th>
+                    <th>Payment</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var mouvement in Model.Mouvements)
+                {
+                    <tr>
+                        <td>@mouvement.FactureNumero</td>
+                        <td>@mouvement.FactureDate.ToShortDateString()</td>
+                        <td>@mouvement.Quantity</td>
+                        <td>@mouvement.TotalTTC</td>
+                        <td>@mouvement.Client.Name</td>
+                        <td>@mouvement.Payment.ModeDePayment</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Back to Produits", "Index")
+</p>

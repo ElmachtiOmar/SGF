@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Core.Entities.Produit>
+@{
+    ViewBag.Title = "Produit";
+}
+<h2>Produit</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-success">Create New</a>
+</p>
+
+<table id="produitTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Libelle</th>
+            <th>PrixAchatHT</th>
+            <th>PrixVenteHT</th>
+            <th>Famille</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var produit in Model)
+        {
+            <tr>
+                <td>@produit.Libelle</td>
+                <td>@produit.PrixAchatHT</td>
+                <td>@produit.PrixVenteHT</td>
+                <td>@produit.Familles</td>
+                <td>@produit.QuantityStock</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = produit.Id }) |
+                     @Html.ActionLink("Details", "Details", new { id = produit.Id }) | 
+                    @* @Html.ActionLink("Delete", "Delete", new { id = produit.Id }) *@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#produitTable').DataTable();
+        });
+    </script>
+}
+
+

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Core.Entities.Client>
+@{
+    ViewBag.Title = "Client";
+}
+
+<h2>Client</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-success">Create New</a>
+</p>
+
+<table id="clientTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Adress</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td>@client.Code</td>
+                <td>@client.Name</td>
+                <td>@client.Email</td> <!-- Adjust this according to your Client entity -->
+                <td>@client.Phone</td>
+                <td>@client.Adress.City @client.Adress.Street @client.Adress.Numbre</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = client.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = client.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = client.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#clientTable').DataTable();
+        });
+    </script>
+}
+

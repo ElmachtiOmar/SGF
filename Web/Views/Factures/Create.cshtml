@@ -1,0 +1,135 @@
+﻿@model Web.ViewModel.FactureViewModel
+
+@{
+    ViewData["Title"] = "Create Facture";
+}
+
+<h2>Create Facture</h2>
+
+@using (Html.BeginForm("Create", "Factures", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Facture</h4>
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Numero, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Numero, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Numero, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClientId, "Client", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ClientId, new SelectList(Model.Clients, "Id", "Name"), "Select Client", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <h4>LigneFactures</h4>
+        <hr />
+        <div id="ligneFacturesContainer">
+            @for (int i = 0; i < Model.LigneFactures.Count; i++)
+            {
+                <div class="ligneFactureRow" data-index="@i">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LigneFactures[i].Quantite, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.LigneFactures[i].Quantite, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LigneFactures[i].Quantite, "", new { @class = "text-danger" })
+                        </div>
+
+                        @Html.LabelFor(model => model.LigneFactures[i].ProduitId, "Produit", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.LigneFactures[i].ProduitId, new SelectList(Model.LigneFactures[i].Produits, "Id", "Libelle"), "Select Produit", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.LigneFactures[i].ProduitId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" class="btn btn-secondary" id="addLigneFacture">Add LigneFacture</button>
+            </div>
+        </div>
+
+        <h4>Payment</h4>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Payment.ModeDePayment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Payment.ModeDePayment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Payment.ModeDePayment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NCheque, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NCheque, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NCheque, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Payment.ModeDeLivraison, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Payment.ModeDeLivraison, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Payment.ModeDeLivraison, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Payment.PaymentState, "Payment Status")
+            @Html.DropDownListFor(model => model.Payment.PaymentState, new SelectList(new[]
+                     {
+        new { Value = "Paid", Text = "Paid" },
+        new { Value = "Unpaid", Text = "Unpaid" }
+        }, "Value", "Text"), "Select Payment Status", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success mt-3" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        document.getElementById('addLigneFacture').addEventListener('click', function () {
+            var container = document.getElementById('ligneFacturesContainer');
+            var index = container.children.length;
+            var template = `
+                        <div class="ligneFactureRow" data-index="${index}">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="LigneFactures_${index}__Quantite">Quantite</label>
+                                <div class="col-md-4">
+                                    <input class="form-control" type="number" name="LigneFactures[${index}].Quantite" id="LigneFactures_${index}__Quantite" />
+                                </div>
+
+                                <label class="control-label col-md-2" for="LigneFactures_${index}__ProduitId">Produit</label>
+                                <div class="col-md-4">
+                                    <select class="form-control" name="LigneFactures[${index}].ProduitId" id="LigneFactures_${index}__ProduitId">
+                                        <option value="">Select Produit</option>
+        @foreach (var produit in Model.LigneFactures.First().Produits)
+        {
+                                                <option value="@produit.Id">@produit.Libelle</option>
+        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>`;
+            container.insertAdjacentHTML('beforeend', template);
+        });
+    </script>
+}

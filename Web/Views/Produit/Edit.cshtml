@@ -1,0 +1,46 @@
+﻿@model Core.Entities.Produit
+
+<h2>Edit Produit</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Libelle"></label>
+        <input asp-for="Libelle" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PrixAchatHT"></label>
+        <input asp-for="PrixAchatHT" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PrixVenteHT"></label>
+        <input asp-for="PrixVenteHT" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Familles"></label>
+        <input asp-for="Familles" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="QuantityStock"></label>
+        <input asp-for="QuantityStock" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Any additional scripts can be added here if needed
+        });
+    </script>
+}
+

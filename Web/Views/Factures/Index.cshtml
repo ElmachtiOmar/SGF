@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Core.Entities.Facture>
+@{
+    ViewBag.Title = "Factures";
+}
+
+<h2>Factures</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-success">Create New</a>
+</p>
+
+<table id="facturesTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Date</th>
+            <th>Client</th>
+            <th>NetaPayerHT</th>
+            <th>TotalTVA</th>
+            <th>NetaPayerTTC</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var facture in Model)
+        {
+            <tr>
+                <td>@facture.Numero</td>
+                <td>@facture.Date.ToString("d")</td>
+                <td>@facture.Client.Name</td> <!-- Adjust this according to your Client entity -->
+                <td>@facture.NetaPayerHT</td>
+                <td>@facture.TotalTVA</td>
+                <td>@facture.NetaPayerTTC</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = facture.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = facture.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = facture.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#facturesTable').DataTable();
+        });
+    </script>
+}

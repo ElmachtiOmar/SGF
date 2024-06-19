@@ -1,0 +1,60 @@
+﻿@model Core.Entities.Client
+
+@{
+    ViewData["Title"] = "Create Client";
+}
+
+<h2>Create Client</h2>
+
+<hr />
+
+<form class="row g-3" method="post">
+    @Html.AntiForgeryToken()
+    <div class="col-md-6">
+        <label asp-for="Code" class="control-label"></label>
+        <input asp-for="Code" class="form-control" />
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <label asp-for="Phone" class="control-label"></label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+
+    <h4>Adress</h4>
+    <div class="col-md-6">
+        <label asp-for="Adress.City" class="control-label"></label>
+        <input asp-for="Adress.City" class="form-control" />
+        <span asp-validation-for="Adress.City" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Adress.Street" class="control-label"></label>
+        <input asp-for="Adress.Street" class="form-control" />
+        <span asp-validation-for="Adress.Street" class="text-danger"></span>
+    </div>
+    <div class="col-md-2">
+        <label asp-for="Adress.Numbre" class="control-label"></label>
+        <input asp-for="Adress.Numbre" class="form-control" />
+        <span asp-validation-for="Adress.Numbre" class="text-danger"></span>
+    </div>
+
+
+        <button type="submit" class="btn btn-primary">Create</button>
+
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
